@@ -1,6 +1,7 @@
 import requests
 import json
 import os
+import re
 from langchain.embeddings import HuggingFaceEmbeddings
 from langchain.vectorstores import Chroma
 from langchain.prompts import PromptTemplate
@@ -8,13 +9,16 @@ from langchain.prompts import PromptTemplate
 # Constants
 CHROMA_DIR = "./chroma_db"
 OLLAMA_BASE_URL = "http://localhost:11434"
-MODEL_NAME = "llama3.1:8b"
+MODEL_NAME = "qwen3"
 
 class OllamaLLM:
     def __init__(self, base_url=OLLAMA_BASE_URL, model=MODEL_NAME):
         self.base_url = base_url
         self.model = model
-        
+    def _remove_thinking(self, text):
+        """Remove content between <think> and </think> tags"""
+        return re.sub(r'<think>.*?</think>', '', text, flags=re.DOTALL)
+       
     def generate(self, prompt, temperature=0.8, max_tokens=2000):
         """Generate text using Ollama"""
         url = f"{self.base_url}/api/generate"
@@ -30,7 +34,10 @@ class OllamaLLM:
         try:
             response = requests.post(url, json=payload)
             response.raise_for_status()
-            return response.json()["response"]
+            raw_response = response.json()["response"]
+            # Remove thinking sections before returning
+            processed_response = self._remove_thinking(raw_response)
+            return processed_response
         except Exception as e:
             print(f"Error generating response: {e}")
             return f"Error: {str(e)}"
