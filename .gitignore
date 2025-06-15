@@ -1,0 +1,12 @@
+./venv
+./vectordb_practice/data
+./ingestion
+./_pytest_cache__
+*.pdf
+*.env
+config.py
+file_hashes.txt
+/vectordb_practice/chroma_db/
+# Ignore Python cache files
+__pycache__/
+
