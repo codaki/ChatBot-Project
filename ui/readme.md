@@ -12,10 +12,10 @@ This application provides a conversational interface where users can ask questio
 
 ## Features
 
-- Conversational UI: Clean, responsive chat interface with typing animations
-- RAG Architecture: Combines document retrieval with language model generation
-- Markdown Support: Bot responses support markdown formatting
-- Real-time Typing Effect: Bot responses appear character-by-character for a more natural feel
+- **Conversational UI**: Clean, responsive chat interface with typing animations
+- **RAG Architecture**: Combines document retrieval with language model generation
+- **Markdown Support**: Bot responses support markdown formatting
+- **Real-time Typing Effect**: Bot responses appear character-by-character for a more natural feel
 
 ## Technologies
 
