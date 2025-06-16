@@ -46,7 +46,7 @@ Frontend
 pip install -r requirements.txt
 ```
 
-3.Ensure Ollama is installed and running:
+3. Ensure Ollama is installed and running:
 
 ```bash
 # Check if Ollama is running
@@ -57,6 +57,10 @@ ollama run llama3.1
 ```
 
 4. Make sure your ChromaDB database is created in chroma_db (run your document ingestion script first if needed)
+
+```bash
+python ingest.py
+```
 
 ## Running the Application
 
