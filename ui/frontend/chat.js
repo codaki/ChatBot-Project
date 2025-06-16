@@ -37,11 +37,8 @@ document.addEventListener("DOMContentLoaded", function () {
         // Hide typing indicator
         hideTypingIndicator();
 
-        // Add bot response to chat
-        addMessage("bot", data.response);
-
-        // Scroll to bottom
-        scrollToBottom();
+        // Add bot response to chat with typing effect
+        addMessage("bot", data.response, true);
       })
       .catch((error) => {
         hideTypingIndicator();
@@ -53,7 +50,7 @@ document.addEventListener("DOMContentLoaded", function () {
       });
   });
 
-  function addMessage(sender, message) {
+  function addMessage(sender, message, withTypingEffect = false) {
     const messageDiv = document.createElement("div");
     messageDiv.className = `message ${sender}`;
 
@@ -61,13 +58,47 @@ document.addEventListener("DOMContentLoaded", function () {
     messageContent.className = "message-content";
 
     const messagePara = document.createElement("p");
-    messagePara.textContent = message;
 
-    messageContent.appendChild(messagePara);
-    messageDiv.appendChild(messageContent);
-    chatMessages.appendChild(messageDiv);
+    if (sender === "bot" && withTypingEffect) {
+      // Add empty paragraph for now
+      messageContent.appendChild(messagePara);
+      messageDiv.appendChild(messageContent);
+      chatMessages.appendChild(messageDiv);
+
+      // Apply typing effect
+      typeMessage(message, messagePara);
+    } else {
+      // Regular message rendering
+      if (sender === "bot") {
+        messagePara.innerHTML = marked.parse(message);
+      } else {
+        messagePara.textContent = message;
+      }
+
+      messageContent.appendChild(messagePara);
+      messageDiv.appendChild(messageContent);
+      chatMessages.appendChild(messageDiv);
+    }
 
     scrollToBottom();
+  }
+
+  function typeMessage(message, element, index = 0, speed = 20) {
+    if (index < message.length) {
+      // Append the next character
+      element.textContent += message.charAt(index);
+
+      // Scroll to keep up with the typing
+      scrollToBottom();
+
+      // Schedule the next character
+      setTimeout(() => {
+        typeMessage(message, element, index + 1, speed);
+      }, speed);
+    } else {
+      // Apply markdown formatting after typing is complete
+      element.innerHTML = marked.parse(message);
+    }
   }
 
   function showTypingIndicator() {
