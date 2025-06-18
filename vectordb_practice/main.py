@@ -9,6 +9,7 @@ from langchain.prompts import PromptTemplate
 # Constants
 CHROMA_DIR = "./chroma_db"
 OLLAMA_BASE_URL = "http://localhost:11434"
+#This can be changed to "qwen3" or other models as needed
 MODEL_NAME = "qwen3"
 
 class OllamaLLM:
