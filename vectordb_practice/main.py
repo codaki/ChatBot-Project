@@ -20,7 +20,7 @@ class OllamaLLM:
         """Remove content between <think> and </think> tags"""
         return re.sub(r'<think>.*?</think>', '', text, flags=re.DOTALL)
        
-    def generate(self, prompt, temperature=0.8, max_tokens=2000):
+    def generate(self, prompt, temperature=0.8, max_tokens=4000):
         """Generate text using Ollama"""
         url = f"{self.base_url}/api/generate"
         
