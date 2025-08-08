@@ -16,6 +16,7 @@ class OllamaLLM:
     def __init__(self, base_url=OLLAMA_BASE_URL, model=MODEL_NAME):
         self.base_url = base_url
         self.model = model
+        #Remove thinking sections from the response
     def _remove_thinking(self, text):
         """Remove content between <think> and </think> tags"""
         return re.sub(r'<think>.*?</think>', '', text, flags=re.DOTALL)
